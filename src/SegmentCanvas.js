@@ -1,3 +1,6 @@
+// Importar las clases necesarias
+import { ElementArray } from './ElementArray.js';
+
 /*******************************************************************************
  * SegmentCanvas
  * @constructor 
@@ -5,7 +8,7 @@
  * each element (this.ElementArray) and draws each segment shape (this.Points[][])
  * Allows you to configure the design by changing settings(bevel, color, etc...)
  ******************************************************************************/
-function SegmentCanvas() {
+export function SegmentCanvas() {
     "use strict";
     this.SegmentWidth = 0.16;           // Width of segments (% of Element Width)
     this.SegmentInterval = 0.05;        // Spacing between segments (% of Element Width)
@@ -25,6 +28,8 @@ function SegmentCanvas() {
     this.ElementArray = new ElementArray(1);
 }
 
+SegmentCanvas.prototype.slideTimeout = null;
+
 // Sets the display output to the given text, recalculates 
 // the segment points and draws the segment to the canvas
 SegmentCanvas.prototype.DispayText = function(value) {
@@ -32,9 +37,37 @@ SegmentCanvas.prototype.DispayText = function(value) {
     // Recalculate points in case any settings changed
     this.CalcPoints();
     // Set the display patterns and draw the canvas
+    this.slideText(value);
+};
+
+SegmentCanvas.prototype.slideText = function(value) {
+    const originalValue = value;
+
+    clearTimeout(this.slideTimeout);
+
     this.ElementArray.SetText(value, this.CharacterMasks);
     this.Draw(this.Canvas, this.ElementArray.Elements);
-};
+
+    if (value.length > this.ElementArray.Elements.length) {
+
+        const slide = () => {
+            let interval = 1000;
+
+            if (value.length <= this.ElementArray.Elements.length) {
+                interval = 3000;
+            }
+
+            value = value.length < this.ElementArray.Elements.length ? originalValue : value.slice(1);
+
+            this.ElementArray.SetText(value, this.CharacterMasks);
+            this.Draw(this.Canvas, this.ElementArray.Elements);
+
+            this.slideTimeout = setTimeout(slide, interval);
+        }
+
+        slide();
+    }
+}
 
 // Draws the segment display to a canvas
 SegmentCanvas.prototype.Draw = function(canvas, elements) {
@@ -45,6 +78,7 @@ SegmentCanvas.prototype.Draw = function(canvas, elements) {
     context.save();
 
     // Calculate the width and spacing of each element
+    this.SetCount(Math.floor(canvas.width/96));
     var elementWidth = this.CalcElementDimensions().Width;
 
     // Offset to adjust for starting point and padding

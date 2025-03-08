@@ -1,9 +1,13 @@
+// Importar SegmentCanvas
+import { SegmentCanvas } from './SegmentCanvas.js';
+export { SegmentCanvas };
+
 /*******************************************************************************
  * SixteenSegment
  * @constructor 
  * Implements Points[] and CharacterMasks[] for a sixteen segment display 
  ******************************************************************************/
-function SixteenSegment(count, canvas, width, height, x, y) {
+export function SixteenSegment(count, canvas, width, height, x, y) {
     "use strict";
     // Set the starting position on the canvas. Default is (0,0)
     this.X = x || 0;
@@ -134,6 +138,7 @@ SixteenSegment.prototype.CharacterMasks = (function() {
         'A' : e|f|a1|a2|b|c|g1|g2,
         'B' : a1|a2|b|c|d1|d2|g2|i|l,
         'C' : a1|a2|f|e|d1|d2,
+        'Ç' : a1|a2|f|e|d1|d2,
         'D' : a1|a2|b|c|d1|d2|i|l,
         'E' : a1|a2|f|e|d1|d2|g1|g2,
         'F' : a1|a2|e|f|g1 ,
@@ -145,6 +150,7 @@ SixteenSegment.prototype.CharacterMasks = (function() {
         'L' : d1|d2|e|f,
         'M' : b|c|e|f|h|j,
         'N' : b|c|e|f|h|k,
+        'Ñ' : a1|b|c|e|f|h|k,
         'O' : a1|a2|b|c|d1|d2|e|f,
         'P' : a1|a2|b|e|f|g1|g2,
         'Q' : a1|a2|b|c|d1|d2|e|f|k,

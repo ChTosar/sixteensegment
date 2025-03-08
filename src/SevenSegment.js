@@ -1,19 +1,27 @@
+// Importar SegmentCanvas
+import { SegmentCanvas } from './SegmentCanvas.js';
+
 /*******************************************************************************
  * SevenSegment
  * @constructor 
+ * Implements Points[] and CharacterMasks[] for a seven segment display 
  ******************************************************************************/
-function SevenSegment(count, canvas, width, height, x, y) {
+export function SevenSegment(count, canvas, width, height, x, y) {
+    "use strict";
+    // Set the starting position on the canvas. Default is (0,0)
     this.X = x || 0;
     this.Y = y || 0;
 
+    // Set display size. Defaults to the size of the canvas
     this.Width = width || canvas.width;
     this.Height = height || canvas.height;
-    
+
     this.Canvas = canvas;
     this.CalcPoints();
-    this.ElementArray.SetCount(count);
+    this.SetCount(count);
 }
 
+// Implements SegmentCanvas using Points[][] and CharacterMasks[] for 7 segments
 SevenSegment.prototype = new SegmentCanvas();
 
 SevenSegment.prototype.CalcPoints = function() {
@@ -83,6 +91,7 @@ SevenSegment.prototype.CharacterMasks = (function() {
     	'A' : parseInt("1110111", 2),
     	'B' : parseInt("1111111", 2),
     	'C' : parseInt("0111001", 2),
+        'Ç' : parseInt("0111001", 2),
     	'D' : parseInt("0111111", 2),
     	'E' : parseInt("1111001", 2),
     	'F' : parseInt("1110001", 2),
@@ -94,6 +103,7 @@ SevenSegment.prototype.CharacterMasks = (function() {
     	'L' : parseInt("0111000", 2),
     	'M' : parseInt("0110111", 2),
     	'N' : parseInt("0110111", 2),
+        'Ñ' : parseInt("0110111", 2),
     	'O' : parseInt("0111111", 2),
     	'P' : parseInt("1110011", 2),
     	'Q' : parseInt("0111111", 2),

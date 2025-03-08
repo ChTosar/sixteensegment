@@ -4,7 +4,7 @@
  * Holds an array of bitmask which store the display pattern for a segmented
  * display.  Provides functions for setting the pattern to display text
  ******************************************************************************/
-function ElementArray(count) {
+export function ElementArray(count) {
     "use strict";
     this.SetCount(count || 0);
 }
