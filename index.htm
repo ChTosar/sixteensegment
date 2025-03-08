@@ -28,10 +28,10 @@
         window.onload = function () {
             "use strict";
             // Create a new sixteen segment display
-            var segment = segmentDisplay.segment
+            var segment = segmentDisplay.segment;
             // When the inputs change update the display
-            document.getElementById("textInput").addEventListener("keyup", () => {
-                update(segment);
+            document.getElementById("textInput").addEventListener("keyup", (event) => {
+                document.getElementById('segmentDisplay').setAttribute('text', event.currentTarget.value);
             });
 
             document.querySelectorAll("input").forEach((input) => {
@@ -44,8 +44,6 @@
                 segment[s] = settings[s];
             }
             init(segment);
-            update(segment);
-            update(segment);
         }
 
         // Update the Segment Display settings
@@ -67,7 +65,6 @@
             segment.StrokeLight = document.getElementById("strokeLight").value;
             segment.StrokeDark = document.getElementById("strokeDark").value;
             segment.StrokeWidth = parseFloat(document.getElementById("rangeLine").value);
-            segment.DispayText(document.getElementById("textInput").value.toUpperCase());
             
             // Output the display settings
             var outstring = [];
@@ -100,7 +97,7 @@
 </head>
 <body>
 <div id="wrapper">
-    <segment-display id="segmentDisplay"></segment-display>
+    <segment-display id="segmentDisplay" type="sixteen"></segment-display>
     <div id="output">
         <pre id="code"></pre>
         <div id="link"></div>
@@ -108,7 +105,7 @@
     <form id="controls">
     <fieldset>
         <label for="textInput">Text</label>
-        <input id="textInput" type="text" value="" oninput="document.getElementById('segmentDisplay').setAttribute('text', this.value)" />
+        <input id="textInput" type="text" value="" />
         <label for="rangePadding">Padding</label>
         <input id="rangePadding" type="range" step="1" max="50" min="0" value="15" />
         <label for="rangeSpacing">Spacing</label>

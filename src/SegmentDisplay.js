@@ -1,4 +1,5 @@
 import { SixteenSegment } from './SixteenSegment.js';
+import { SevenSegment } from './SevenSegment.js';
 
 class SegmentDisplay extends HTMLElement {
     constructor() {
@@ -6,21 +7,7 @@ class SegmentDisplay extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.canvas = document.createElement('canvas');
         this.shadowRoot.appendChild(this.canvas);
-        
-        this.settings = {
-            SegmentWidth: 0.12,
-            BevelWidth: 0.49,
-            SegmentInterval: 0.025,
-            SideBevelEnabled: false,
-            Padding: 15,
-            Spacing: 10,
-            FillLight: '#9eff0d',
-            FillDark: '#0c1401',
-            StrokeLight: '#ff0000',
-            StrokeDark: '#550000',
-            StrokeWidth: 0
-        };
-
+      
         this.style.width = '100%';
         this.style.display = 'block';
 
@@ -38,18 +25,43 @@ class SegmentDisplay extends HTMLElement {
         this.initializeSegment();
     }
 
+    initConfig() {
+        var settings = {
+            X : 0,
+            Y : 0,
+            SegmentWidth : 0.12,
+            BevelWidth : 0.49,
+            SegmentInterval : 0.025,
+            SideBevelEnabled : false,
+            Padding : 15,
+            Spacing : 10,
+            FillLight : '#9eff0d',
+            FillDark : '#0c1401',
+            StrokeLight : '#ff0000',
+            StrokeDark : '#550000',
+            StrokeWidth : 0
+        };
+
+        Object.assign(this.segment, settings);
+    }
+
     render() {
         this.canvas.width = this.offsetWidth;
         this.canvas.height = 130;
     }
 
     initializeSegment() {
-        this.segment = new SixteenSegment(1, this.canvas);
+        if (this.getAttribute('type') == 'sixteen') {
+            this.segment = new SixteenSegment(1, this.canvas);
+        } else if (this.getAttribute('type') == 'seven') {
+            this.segment = new SevenSegment(1, this.canvas);
+        }
+        this.initConfig();
         this.updateDisplay();
     }
 
     updateDisplay() {
-        const text = this.getAttribute('text') || '';
+        const text = this.getAttribute('text') || ' ';
         this.segment.DispayText(text.toUpperCase());
     }
 

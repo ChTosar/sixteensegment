@@ -34,6 +34,8 @@ SegmentCanvas.prototype.slideTimeout = null;
 // the segment points and draws the segment to the canvas
 SegmentCanvas.prototype.DispayText = function(value) {
     "use strict";
+    this.SetCount(Math.floor(this.Canvas.width/96));
+
     // Recalculate points in case any settings changed
     this.CalcPoints();
     // Set the display patterns and draw the canvas
@@ -78,7 +80,6 @@ SegmentCanvas.prototype.Draw = function(canvas, elements) {
     context.save();
 
     // Calculate the width and spacing of each element
-    this.SetCount(Math.floor(canvas.width/96));
     var elementWidth = this.CalcElementDimensions().Width;
 
     // Offset to adjust for starting point and padding
