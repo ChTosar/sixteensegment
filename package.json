@@ -2,11 +2,15 @@
   "name": "segment-display",
   "version": "1.0.0",
   "description": "Segment Display using canvas",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --config webpack.prod.config.js",
-    "dev": "webpack --config webpack.config.js --watch"
+    "dev": "webpack --config webpack.config.js --watch",
+    "prepublishOnly": "npm run build"
   },
   "repository": {
     "type": "git",

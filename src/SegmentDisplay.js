@@ -51,13 +51,19 @@ class SegmentDisplay extends HTMLElement {
     }
 
     initializeSegment() {
-        if (this.getAttribute('type') == 'sixteen') {
-            this.segment = new SixteenSegment(1, this.canvas);
-        } else if (this.getAttribute('type') == 'seven') {
-            this.segment = new SevenSegment(1, this.canvas);
-        }
-        this.initConfig();
-        this.updateDisplay();
+        const type = this.getAttribute('type');
+
+        if (!type) {
+            throw new Error('Type is required');
+        } else {
+            if (type == 'sixteen') {
+                this.segment = new SixteenSegment(1, this.canvas);
+            } else if (type == 'seven') {
+                this.segment = new SevenSegment(1, this.canvas);
+            }
+            this.initConfig();
+            this.updateDisplay();
+        }        
     }
 
     updateDisplay() {
