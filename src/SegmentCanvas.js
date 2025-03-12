@@ -34,7 +34,10 @@ SegmentCanvas.prototype.slideTimeout = null;
 // the segment points and draws the segment to the canvas
 SegmentCanvas.prototype.DispayText = function(value) {
     "use strict";
-    this.SetCount(Math.floor(this.Canvas.width/96));
+
+    const spectRatio = (96*this.Canvas.height)/130;
+
+    this.SetCount(Math.floor(this.Canvas.width/spectRatio));
 
     // Recalculate points in case any settings changed
     this.CalcPoints();

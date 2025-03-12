@@ -47,7 +47,7 @@ class SegmentDisplay extends HTMLElement {
 
     render() {
         this.canvas.width = this.offsetWidth;
-        this.canvas.height = 130;
+        this.canvas.height = this.getAttribute('height') || 130;
     }
 
     initializeSegment() {
